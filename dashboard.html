@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FR &rarr; SO Jump Dashboard | 247 Recruits 26&ndash;200</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:wght@500;600;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="dashboard.css">
+</head>
+<body>
+ 
+<header class="topbar">
+  <div class="topbar-inner">
+    <div class="brand">
+      <span class="brand-mark">FR&rarr;SO</span>
+      <span class="brand-name">Sophomore Jump Dashboard</span>
+    </div>
+    <div class="brand-sub">247Sports Recruits Ranked 26&ndash;200 &middot; Classes of 2019&ndash;2024</div>
+  </div>
+</header>
+ 
+<main class="wrap">
+ 
+  <section class="filters" aria-label="Filters">
+    <div class="filter-group">
+      <span class="filter-label">Class <em>(select multiple)</em></span>
+      <div class="chip-row" id="filterClass">
+        <button class="chip active" data-val="all">All</button>
+        <button class="chip" data-val="2024">2024</button>
+        <button class="chip" data-val="2023">2023</button>
+        <button class="chip" data-val="2022">2022</button>
+        <button class="chip" data-val="2021">2021</button>
+        <button class="chip" data-val="2020">2020</button>
+        <button class="chip" data-val="2019">2019</button>
+      </div>
+    </div>
+ 
+    <div class="filter-group">
+      <span class="filter-label">Rank tier <em>(select multiple)</em></span>
+      <div class="chip-row" id="filterBin">
+        <button class="chip active" data-val="all">All</button>
+        <button class="chip" data-val="26-60">26&ndash;60</button>
+        <button class="chip" data-val="61-100">61&ndash;100</button>
+        <button class="chip" data-val="101-150">101&ndash;150</button>
+        <button class="chip" data-val="151-200">151&ndash;200</button>
+      </div>
+    </div>
+ 
+    <div class="filter-group">
+      <span class="filter-label">Position <em>(select multiple)</em></span>
+      <div class="chip-row" id="filterPos">
+        <button class="chip active" data-val="all">All</button>
+        <button class="chip" data-val="G">Guard</button>
+        <button class="chip" data-val="F">Forward</button>
+        <button class="chip" data-val="C">Center</button>
+      </div>
+    </div>
+ 
+    <div class="filter-group">
+      <span class="filter-label">Transfer status</span>
+      <div class="chip-row" id="filterTransfer">
+        <button class="chip active" data-val="all">All</button>
+        <button class="chip" data-val="yes">Transferred</button>
+        <button class="chip" data-val="no">Stayed</button>
+      </div>
+    </div>
+ 
+    <div class="filter-group search-group">
+      <span class="filter-label">Search</span>
+      <input type="text" id="searchBox" placeholder="Player name&hellip;" autocomplete="off">
+    </div>
+ 
+    <button class="reset-btn" id="resetFilters">Reset filters</button>
+  </section>
+ 
+  <section class="filters fr-filters" aria-label="Freshman-year stat minimums">
+    <div class="filter-group full-label">
+      <span class="filter-label">Freshman-year minimums <em>(only include players at or above)</em></span>
+    </div>
+    <div class="fr-min-grid">
+      <label class="fr-min-field">
+        <span>MPG</span>
+        <input type="number" min="0" step="0.5" placeholder="e.g. 15" id="minMPG">
+      </label>
+      <label class="fr-min-field">
+        <span>PPG</span>
+        <input type="number" min="0" step="0.5" placeholder="e.g. 8" id="minPPG">
+      </label>
+      <label class="fr-min-field">
+        <span>RPG</span>
+        <input type="number" min="0" step="0.5" placeholder="e.g. 4" id="minRPG">
+      </label>
+      <label class="fr-min-field">
+        <span>APG</span>
+        <input type="number" min="0" step="0.5" placeholder="e.g. 2" id="minAPG">
+      </label>
+      <label class="fr-min-field">
+        <span>PER</span>
+        <input type="number" min="0" step="0.5" placeholder="e.g. 15" id="minPER">
+      </label>
+      <label class="fr-min-field">
+        <span>WS/40</span>
+        <input type="number" min="0" step="0.01" placeholder="e.g. 0.10" id="minWS40">
+      </label>
+    </div>
+  </section>
+ 
+  <section class="stat-cards" id="statCards" aria-label="Summary statistics"></section>
+ 
+  <section class="chart-section" aria-label="Freshman vs sophomore comparison charts">
+    <h2 class="section-title">Freshman &rarr; Sophomore averages</h2>
+    <div class="chart-grid">
+      <div class="chart-card">
+        <p class="chart-label">Minutes / Game</p>
+        <div class="chart-holder"><canvas id="chartMPG" role="img" aria-label="Bar chart of average minutes per game, freshman versus sophomore year"></canvas></div>
+      </div>
+      <div class="chart-card">
+        <p class="chart-label">Points / Game</p>
+        <div class="chart-holder"><canvas id="chartPTS" role="img" aria-label="Bar chart of average points per game, freshman versus sophomore year"></canvas></div>
+      </div>
+      <div class="chart-card">
+        <p class="chart-label">PER</p>
+        <div class="chart-holder"><canvas id="chartPER" role="img" aria-label="Bar chart of average PER, freshman versus sophomore year"></canvas></div>
+      </div>
+      <div class="chart-card">
+        <p class="chart-label">Win Shares / 40</p>
+        <div class="chart-holder"><canvas id="chartWS40" role="img" aria-label="Bar chart of average win shares per 40 minutes, freshman versus sophomore year"></canvas></div>
+      </div>
+    </div>
+  </section>
+ 
+  <section class="table-section" aria-label="Player table">
+    <div class="table-header-row">
+      <h2 class="section-title">Player detail</h2>
+      <span class="table-count" id="tableCount"></span>
+    </div>
+    <div class="table-scroll">
+      <table id="playerTable">
+        <thead>
+          <tr>
+            <th data-key="name">Player</th>
+            <th data-key="class">Class</th>
+            <th data-key="rank">Rank</th>
+            <th data-key="position">Pos</th>
+            <th data-key="mpgDelta">MPG &Delta;</th>
+            <th data-key="ptsDelta">PPG &Delta;</th>
+            <th data-key="perDelta">PER &Delta;</th>
+            <th data-key="transferred">Transfer</th>
+            <th data-key="goodSO">Good SO?</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody id="tableBody"></tbody>
+      </table>
+    </div>
+    <div class="pagination" id="pagination"></div>
+  </section>
+ 
+</main>
+ 
+<footer class="footer">
+  <span>Freshman &rarr; sophomore season comparison for 247Sports-ranked recruits (26&ndash;200), classes of 2019&ndash;2024. One-and-done departures excluded.</span>
+</footer>
+ 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<script src="dashboard.js"></script>
+</body>
+</html>
